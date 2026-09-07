@@ -4,7 +4,7 @@ import { Mascot, SectionTitle } from "@/components/ui";
 import { exploreItems, student } from "@/data/demo";
 
 export function HomeScreen({ go }: { go: (s: string) => void }) {
-  const { t } = useLang();
+  const { t, tx } = useLang();
   const { goal, counts, currentPriority, nextStep, exploring } = useByeol();
   const opportunity = exploreItems.find((e) => e.category === "Research")!;
 
@@ -18,16 +18,18 @@ export function HomeScreen({ go }: { go: (s: string) => void }) {
       <p className="tagline">{t("tagline")}</p>
 
       <div className="hero-card hero-lead">
-        <p className="hero-kicker">YOUR PATH TO</p>
-        <h2 className="hero-goal xl">{exploring ? "Still exploring" : goal}</h2>
+        <p className="hero-kicker">{t("hero_kicker")}</p>
+        <h2 className="hero-goal xl">{exploring ? t("still_exploring") : tx(goal)}</h2>
         <div className="hero-split">
           <div className="hero-block priority" key={currentPriority?.id}>
-            <p className="hero-label">CURRENT PRIORITY</p>
-            <p className="hero-value">{currentPriority?.name ?? "—"}</p>
+            <p className="hero-label">{t("hero_priority")}</p>
+            <p className="hero-value">{currentPriority ? tx(currentPriority.name) : "—"}</p>
           </div>
           <div className="hero-block next">
-            <p className="hero-label">NEXT ACTION</p>
-            <p className="hero-value">{nextStep ? `Start ${nextStep.action}` : "Build career evidence"}</p>
+            <p className="hero-label">{t("hero_next")}</p>
+            <p className="hero-value">
+            {nextStep ? t("home_start", { x: tx(nextStep.action) }) : t("home_build_evidence")}
+          </p>
           </div>
         </div>
         <div className="hero-stats big">
@@ -42,7 +44,7 @@ export function HomeScreen({ go }: { go: (s: string) => void }) {
           </span>
         </div>
         <button className="btn-primary" onClick={() => go("path")}>
-          Open My Path
+          {t("home_open_path")}
         </button>
       </div>
 
@@ -54,8 +56,10 @@ export function HomeScreen({ go }: { go: (s: string) => void }) {
           </svg>
         </div>
         <div>
-          <p className="action-title">{nextStep?.action ?? "Build career evidence"}</p>
-          <p className="action-sub">Evidence target: {nextStep?.evidenceTarget ?? "Portfolio"}</p>
+          <p className="action-title">{nextStep ? tx(nextStep.action) : t("home_build_evidence")}</p>
+          <p className="action-sub">
+            {t("home_evidence_target", { x: nextStep ? tx(nextStep.evidenceTarget) : "—" })}
+          </p>
         </div>
         <span className="chevron">›</span>
       </div>
@@ -69,9 +73,9 @@ export function HomeScreen({ go }: { go: (s: string) => void }) {
           </svg>
         </div>
         <div>
-          <p className="action-title">{opportunity.title}</p>
+          <p className="action-title">{tx(opportunity.title)}</p>
           <p className="action-sub">
-            {opportunity.deadline} · Addresses {opportunity.addresses}
+            {tx(opportunity.deadline ?? "")} · {t("addresses")}: {tx(opportunity.addresses)}
           </p>
         </div>
         <span className="chevron">›</span>
@@ -80,9 +84,9 @@ export function HomeScreen({ go }: { go: (s: string) => void }) {
       <SectionTitle>{t("home_progress")}</SectionTitle>
       <div className="card">
         <p className="action-title" style={{ marginBottom: 6 }}>
-          {student.projects[0]?.name}
+          {tx(student.projects[0]?.name ?? "")}
         </p>
-        <p className="action-sub">Added as evidence for Python and Machine Learning.</p>
+        <p className="action-sub">{t("home_added_evidence")}</p>
       </div>
 
       <div className="nudge-card">
@@ -91,28 +95,28 @@ export function HomeScreen({ go }: { go: (s: string) => void }) {
           <p className="nudge-label">{t("home_nudge")}</p>
           <p className="nudge-text">
             {currentPriority
-              ? `${currentPriority.name} is your current priority capability. One short learning block this week would start building evidence.`
-              : "You have evidence for every priority capability — focus on portfolio depth next."}
+              ? t("home_nudge_text", { x: tx(currentPriority.name) })
+              : t("home_nudge_done")}
           </p>
           <button className="btn-small" onClick={() => go("path")}>
-            Open My Path
+            {t("home_open_path")}
           </button>
         </div>
       </div>
 
       <SectionTitle>{t("home_quick")}</SectionTitle>
       <div className="quick-row">
-        {["Am I on track?", "Am I qualified for this?", "What should I learn next?"].map((q) => (
+        {["q_track", "q_qualified", "q_learn_next"].map((q) => (
           <button key={q} className="quick-chip" onClick={() => go("ai")}>
-            {q}
+            {t(q)}
           </button>
         ))}
       </div>
 
       <div className="mini-links">
-        <button onClick={() => go("calendar")}>Calendar</button>
-        <button onClick={() => go("graph")}>Career graph</button>
-        <button onClick={() => go("privacy")}>Privacy &amp; data</button>
+        <button onClick={() => go("calendar")}>{t("nav_calendar")}</button>
+        <button onClick={() => go("graph")}>{t("nav_graph")}</button>
+        <button onClick={() => go("privacy")}>{t("nav_privacy")}</button>
       </div>
     </div>
   );

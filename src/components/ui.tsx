@@ -21,11 +21,13 @@ export function Mascot({ size = 34, gil = false }: { size?: number; gil?: boolea
 
 export function StatusPill({ status }: { status: SkillStatus }) {
   const key = status.toLowerCase().replace(" ", "-");
-  return <span className={`status-pill ${key}`}>{status}</span>;
+  const { ts } = useLang();
+  return <span className={`status-pill ${key}`}>{ts(status)}</span>;
 }
 
 export function DemoBadge({ text }: { text?: string }) {
-  return <span className="demo-badge">{text ?? "PROTOTYPE — ILLUSTRATIVE DATA"}</span>;
+  const { t } = useLang();
+  return <span className="demo-badge">{text ?? t("demo_badge")}</span>;
 }
 
 export function SectionTitle({ children }: { children: ReactNode }) {
@@ -68,12 +70,12 @@ export function WhyThis({
           <p className="based-on">
             <strong>{t("based_on")}:</strong>{" "}
             {(basedOn ?? [
-              "Your profile",
-              "Your courses",
-              "Your projects",
-              "Your career goal",
-              "Career requirements",
-              "Official university information",
+              t("bo_profile"),
+              t("bo_courses"),
+              t("bo_projects"),
+              t("bo_goal"),
+              t("bo_requirements"),
+              t("bo_official"),
             ]).join(" · ")}
           </p>
         </div>
@@ -107,15 +109,17 @@ export function RecActions({ id }: { id: string }) {
       ))}
       {current && (
         <span className="rec-state">
-          {current === "added"
-            ? "Added to My Path"
-            : current === "completed"
-              ? "Marked completed"
-              : current === "not_relevant"
-                ? "Hidden from priorities"
-                : current === "interested"
-                  ? "Saved as interested"
-                  : "Saved for later"}
+          {t(
+            current === "added"
+              ? "rec_added"
+              : current === "completed"
+                ? "rec_completed"
+                : current === "not_relevant"
+                  ? "rec_hidden"
+                  : current === "interested"
+                    ? "rec_interested"
+                    : "rec_later",
+          )}
         </span>
       )}
     </div>
@@ -155,15 +159,20 @@ export function LangPicker() {
 
 export function Toasts() {
   const { toasts, dismissToast } = useByeol();
+  const { t, tx } = useLang();
   if (!toasts.length) return null;
+  const vars = (params?: Record<string, string>) =>
+    params
+      ? Object.fromEntries(Object.entries(params).map(([k, v]) => [k, tx(v)]))
+      : undefined;
   return (
     <div className="toast-wrap">
-      {toasts.map((t) => (
-        <div className="toast" key={t.id} onClick={() => dismissToast(t.id)}>
+      {toasts.map((toast) => (
+        <div className="toast" key={toast.id} onClick={() => dismissToast(toast.id)}>
           <Mascot size={28} />
           <div>
-            <p className="toast-title">{t.title}</p>
-            {t.body && <p className="toast-body">{t.body}</p>}
+            <p className="toast-title">{t(toast.title, vars(toast.params))}</p>
+            {toast.body && <p className="toast-body">{t(toast.body, vars(toast.params))}</p>}
           </div>
         </div>
       ))}

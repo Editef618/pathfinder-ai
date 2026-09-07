@@ -52,15 +52,27 @@ export function UniversityAdmin() {
   return (
     <AdminShell
       title="University dashboard"
-      subtitle="Illustrative university network · University A"
+      subtitle="Illustrative university network · University A (demo environment)"
       badge="DEMO DATA — NOT LIVE UNIVERSITY RESULTS"
     >
+      <p className="admin-area-title">1 · Student engagement</p>
       <div className="metric-grid">
-        {universityDemo.metrics.map((m) => (
+        {universityValue.engagement.map((m) => (
           <div className="metric-card" key={m.label}>
             <p className="metric-value">{m.value}</p>
             <p className="metric-label">{m.label}</p>
-            <span className="metric-tag">Illustrative</span>
+            <span className="metric-tag">{m.note}</span>
+          </div>
+        ))}
+      </div>
+
+      <p className="admin-area-title">2 · Career &amp; skill-gap intelligence</p>
+      <div className="metric-grid">
+        {universityValue.intelligence.map((m) => (
+          <div className="metric-card" key={m.label}>
+            <p className="metric-value">{m.value}</p>
+            <p className="metric-label">{m.label}</p>
+            <span className="metric-tag">{m.note}</span>
           </div>
         ))}
       </div>
@@ -88,6 +100,28 @@ export function UniversityAdmin() {
           Byeol informs university staff. It does not automatically redesign curriculum.
         </p>
       </div>
+
+      <p className="admin-area-title">3 · Actionable support decisions</p>
+      <div className="decision-grid">
+        {universityValue.decisions.map((d) => (
+          <div className="decision-card" key={d.skill}>
+            <p className="decision-skill">{d.skill}</p>
+            <span className="decision-insight">{d.insight}</span>
+            <div className="decision-arrow">↓</div>
+            <p className="decision-kicker">POTENTIAL SUPPORT RESPONSE</p>
+            <div className="decision-arrow">↓</div>
+            <div className="decision-responses">
+              {d.responses.map((r) => (
+                <span key={r}>{r}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      <p className="evidence-note">
+        Insight → decision → student support. University staff choose the response; Byeol never
+        changes curriculum automatically. All figures are illustrative demo data.
+      </p>
 
       <div className="admin-cols">
         <div className="card">

@@ -17,20 +17,20 @@ export function HomeScreen({ go }: { go: (s: string) => void }) {
       <h1 className="greeting">{t("greeting")}</h1>
       <p className="tagline">{t("tagline")}</p>
 
-      <div className="hero-card">
-        <p className="hero-kicker">{t("hero_kicker")}</p>
-        <h2 className="hero-goal">{exploring ? "Still exploring" : goal}</h2>
+      <div className="hero-card hero-lead">
+        <p className="hero-kicker">YOUR PATH TO</p>
+        <h2 className="hero-goal xl">{exploring ? "Still exploring" : goal}</h2>
         <div className="hero-split">
-          <div>
-            <p className="hero-label">{t("hero_priority")}</p>
+          <div className="hero-block priority" key={currentPriority?.id}>
+            <p className="hero-label">CURRENT PRIORITY</p>
             <p className="hero-value">{currentPriority?.name ?? "—"}</p>
           </div>
-          <div>
-            <p className="hero-label">{t("hero_next")}</p>
+          <div className="hero-block next">
+            <p className="hero-label">NEXT ACTION</p>
             <p className="hero-value">{nextStep ? `Start ${nextStep.action}` : "Build career evidence"}</p>
           </div>
         </div>
-        <div className="hero-stats">
+        <div className="hero-stats big">
           <span className="hero-stat demo">
             <b>{counts.demonstrated}</b> {t("stat_demonstrated")}
           </span>

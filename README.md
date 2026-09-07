@@ -1,29 +1,59 @@
-# Welcome to your Lovable project
+# Byeol — student pathway prototype
 
-This project was built with [Lovable](https://lovable.dev).
+Byeol connects what students learn with where they want to go.
 
-## Build with Lovable
+This repository is an **interactive prototype**. All students, universities, employers,
+metrics and opportunities shown are illustrative demo data. Byeol has no confirmed
+university or employer partnerships and no validated outcome statistics.
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+## What it demonstrates
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+Four views are switchable at the top of the page:
 
-## Development
+- **Mobile** — the student app inside a phone frame
+- **Web** — the same student experience in a desktop layout
+- **University admin** — aggregated, de-identified program/department insights
+- **Employer preview** — a future-ecosystem concept, opt-in only
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+Student screens: Home, My Path, Explore, Byeol AI, Profile, Calendar, Privacy & Data,
+Career Graph and Onboarding.
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
+### Core ideas
+
+- **Evidence-based skill statuses** — Demonstrated / Developing / Introduced / Priority gap,
+  each backed by listed evidence. Taking a course does not automatically mean mastery.
+- **Adaptive pathway** — marking learning as completed changes the skill status, adds
+  evidence, updates the roadmap and surfaces the next priority.
+- **Explainability** — every recommendation has a "Why this?" and a "Based on" trail.
+- **Privacy first** — universities see aggregates only; employer matching is off by default
+  and identifiable introductions require explicit student consent.
+- **Multilingual** — English, Korean, Japanese, Spanish, French and Chinese for core UI
+  strings (deeper content falls back to English in this prototype).
+
+## Running locally
+
+```bash
+bun install
+bun run dev
 ```
 
-## Built with
+The app runs at http://localhost:8080.
 
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
+## Tech
+
+TanStack Start (React 19 + Vite), TypeScript, and the original prototype stylesheet in
+`src/byeol.css` so the Byeol visual identity is preserved.
+
+```
+src/
+  data/demo.ts        illustrative demo data
+  lib/i18n.tsx        language provider + translations
+  lib/store.tsx       student state, adaptive pathway logic
+  components/ui.tsx   shared UI pieces
+  screens/            student screens
+  views/              mobile / web / admin shells
+```
+
+## Environment
+
+No backend or API keys are required. See `.env.example`.

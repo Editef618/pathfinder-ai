@@ -144,7 +144,7 @@ const ja: Dict = {
   hero_priority: "現在の優先事項",
   hero_next: "次の行動",
   stat_demonstrated: "実証済み",
-  stat_developing: "development中",
+  stat_developing: "発展中",
   stat_gaps: "優先ギャップ",
   path_title: "マイパス",
   path_goal: "キャリア目標",

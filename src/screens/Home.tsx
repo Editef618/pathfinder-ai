@@ -80,7 +80,7 @@ export function HomeScreen({ go }: { go: (s: string) => void }) {
       <SectionTitle>{t("home_progress")}</SectionTitle>
       <div className="card">
         <p className="action-title" style={{ marginBottom: 6 }}>
-          {student.projects[0].name}
+          {student.projects[0]?.name}
         </p>
         <p className="action-sub">Added as evidence for Python and Machine Learning.</p>
       </div>

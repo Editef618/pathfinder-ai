@@ -17,7 +17,7 @@ const CATEGORIES = [
 ];
 
 export function ExploreScreen() {
-  const { t } = useLang();
+  const { t, tx } = useLang();
   const [cat, setCat] = useState("For you");
   const [q, setQ] = useState("");
 
@@ -49,34 +49,34 @@ export function ExploreScreen() {
             className={`chip ${cat === c ? "active" : ""}`}
             onClick={() => setCat(c)}
           >
-            {c}
+            {tx(c)}
           </button>
         ))}
       </div>
 
       {items.map((i) => (
         <div className="card feed-card" key={i.id}>
-          <span className="feed-tag">{i.category}</span>
-          <p className="feed-title">{i.title}</p>
-          <p className="feed-sub">Source: {i.source}</p>
+          <span className="feed-tag">{tx(i.category)}</span>
+          <p className="feed-title">{tx(i.title)}</p>
+          <p className="feed-sub">{t("source")}: {tx(i.source)}</p>
           <div className="fit-lines">
             <p>
-              <span>{t("addresses")}:</span> {i.addresses}
+              <span>{t("addresses")}:</span> {tx(i.addresses)}
             </p>
             <p>
-              <span>{t("creates")}:</span> {i.creates}
+              <span>{t("creates")}:</span> {tx(i.creates)}
             </p>
             {i.deadline && (
               <p>
-                <span>{t("deadline")}:</span> {i.deadline}
+                <span>{t("deadline")}:</span> {tx(i.deadline)}
               </p>
             )}
           </div>
-          <WhyThis text={i.why} />
+          <WhyThis text={tx(i.why)} />
           <RecActions id={i.id} />
         </div>
       ))}
-      {items.length === 0 && <p className="feed-sub">Nothing matches that search yet.</p>}
+      {items.length === 0 && <p className="feed-sub">{t("explore_empty")}</p>}
     </div>
   );
 }

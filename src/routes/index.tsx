@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { LanguageProvider } from "@/lib/i18n";
+import { LanguageProvider, useLang } from "@/lib/i18n";
 import { ByeolProvider } from "@/lib/store";
 import { Toasts } from "@/components/ui";
 import { MobileView, WebView } from "@/views/StudentApp";
@@ -30,17 +30,27 @@ export const Route = createFileRoute("/")({
 });
 
 const VIEWS = [
-  { id: "mobile", label: "Mobile" },
-  { id: "web", label: "Web" },
-  { id: "university", label: "University admin" },
-  { id: "employer", label: "Employer preview" },
+  { id: "mobile", key: "view_mobile" },
+  { id: "web", key: "view_web" },
+  { id: "university", key: "view_university" },
+  { id: "employer", key: "view_employer" },
 ];
 
 function ByeolApp() {
-  const [view, setView] = useState("mobile");
   return (
     <LanguageProvider>
       <ByeolProvider>
+        <ByeolShell />
+      </ByeolProvider>
+    </LanguageProvider>
+  );
+}
+
+function ByeolShell() {
+  const [view, setView] = useState("mobile");
+  const { t } = useLang();
+  return (
+    <>
         <div className="byeol-root">
           <div className="topbar">
             <div className="view-switch">
@@ -50,13 +60,13 @@ function ByeolApp() {
                   className={view === v.id ? "active" : ""}
                   onClick={() => setView(v.id)}
                 >
-                  {v.label}
+                  {t(v.key)}
                 </button>
               ))}
             </div>
-            <span className="demo-mode">DEMO MODE</span>
+            <span className="demo-mode">{t("demo_mode")}</span>
           </div>
-          <p className="root-tagline">Byeol connects what students learn with where they want to go.</p>
+          <p className="root-tagline">{t("root_tagline")}</p>
           <div className="stage">
             {view === "mobile" && <MobileView />}
             {view === "web" && <WebView />}
@@ -65,7 +75,6 @@ function ByeolApp() {
           </div>
           <Toasts />
         </div>
-      </ByeolProvider>
-    </LanguageProvider>
+    </>
   );
 }

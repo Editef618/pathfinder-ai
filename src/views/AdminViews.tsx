@@ -1,5 +1,5 @@
 import { DemoBadge, LangPicker, Mascot } from "@/components/ui";
-import { employerDemo, universityDemo } from "@/data/demo";
+import { employerDemo, universityDemo, universityValue } from "@/data/demo";
 import { useByeol } from "@/lib/store";
 
 function AdminShell({

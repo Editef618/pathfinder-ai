@@ -68,7 +68,7 @@ export function ByeolAIScreen({ go }: { go: (s: string) => void }) {
           <div className={`bubble-row ${m.who === "me" ? "me" : "bot"}`}>
             {m.who === "byeol" && <Mascot size={26} />}
             <div className="bubble">
-              {m.who === "me" ? m.text : t(m.text, m.params ? { x: tx(m.params.x!) } : undefined)}
+              {t(m.text, m.params ? { x: tx(m.params.x) } : undefined)}
             </div>
           </div>
           {m.comparison && (
@@ -103,7 +103,7 @@ export function ByeolAIScreen({ go }: { go: (s: string) => void }) {
                     go("path");
                   }}
                 >
-                  Add to My Path
+                  {t("ai_add_path")}
                 </button>
                 <button className="rec-btn" onClick={() => go("explore")}>
                   {t("ai_find_resource")}

@@ -341,3 +341,45 @@ export const employerDemo = {
     reach: "Aggregate, de-identified cohort only",
   },
 };
+
+/* ---------- Gap → recommended action → opportunity (ILLUSTRATIVE) ---------- */
+export const gapActions: Record<string, { action: string; opportunity: string }> = {
+  "Control Systems": {
+    action: "Control Systems Fundamentals",
+    opportunity: "Mobile robotics lab research (demo)",
+  },
+  ROS: { action: "ROS Robotics Project", opportunity: "Autonomous robot challenge (demo)" },
+  SLAM: { action: "SLAM Learning Path", opportunity: "Robotics internship preparation (demo)" },
+  "C++": { action: "Intermediate C++ for robotics", opportunity: "Robotics internship preparation (demo)" },
+};
+
+/* ---------- University value framing (ILLUSTRATIVE) ---------- */
+export const universityValue = {
+  engagement: [
+    { label: "Active students", value: "1,240", note: "Illustrative" },
+    { label: "Weekly active students", value: "610", note: "Illustrative" },
+    { label: "4-week retention", value: "48%", note: "Illustrative" },
+  ],
+  intelligence: [
+    { label: "Students with defined career goals", value: "72%", note: "Illustrative" },
+    { label: "Students with identified priority gaps", value: "81%", note: "Illustrative" },
+    { label: "Recommendation action rate", value: "37%", note: "Illustrative" },
+  ],
+  decisions: [
+    {
+      skill: "Control Systems",
+      insight: "Common priority gap",
+      responses: [
+        "Promote existing elective",
+        "Offer workshop",
+        "Recommend learning resource",
+        "Create project opportunity",
+      ],
+    },
+    {
+      skill: "ROS",
+      insight: "Emerging career skill gap",
+      responses: ["Create robotics workshop", "Promote existing robotics opportunities"],
+    },
+  ],
+};

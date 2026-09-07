@@ -3,17 +3,13 @@ import { useLang } from "@/lib/i18n";
 import { useByeol } from "@/lib/store";
 import { Mascot } from "@/components/ui";
 
-type Msg = { who: "me" | "byeol"; text: string; comparison?: boolean };
+/** `text` is an i18n key (or literal user input, which falls through untranslated). */
+type Msg = { who: "me" | "byeol"; text: string; params?: Record<string, string>; comparison?: boolean };
 
-const INTRO: Msg[] = [
-  {
-    who: "byeol",
-    text: "Hi Jiwoo — I keep your profile, courses, projects and evidence in context, so ask me anything about your path.",
-  },
-];
+const INTRO: Msg[] = [{ who: "byeol", text: "ai_intro" }];
 
 export function ByeolAIScreen({ go }: { go: (s: string) => void }) {
-  const { t } = useLang();
+  const { t, tx } = useLang();
   const { skills, setItemFeedback } = useByeol();
   const [msgs, setMsgs] = useState<Msg[]>(INTRO);
   const [input, setInput] = useState("");
@@ -23,12 +19,8 @@ export function ByeolAIScreen({ go }: { go: (s: string) => void }) {
   const runInternshipCheck = () => {
     setMsgs((m) => [
       ...m,
-      { who: "me", text: "Am I ready for this Robotics AI internship?" },
-      {
-        who: "byeol",
-        text: "I compared the internship requirements with your current profile and evidence.",
-        comparison: true,
-      },
+      { who: "me", text: "ai_chip_ready" },
+      { who: "byeol", text: "ai_compared", comparison: true },
     ]);
   };
 
@@ -37,15 +29,19 @@ export function ByeolAIScreen({ go }: { go: (s: string) => void }) {
     if (!text) return;
     setInput("");
     const lower = text.toLowerCase();
-    if (lower.includes("internship") || lower.includes("ready")) {
+    if (
+      lower.includes("internship") ||
+      lower.includes("ready") ||
+      lower.includes("인턴") ||
+      lower.includes("インターン") ||
+      lower.includes("stage") ||
+      lower.includes("práctica") ||
+      lower.includes("实习")
+    ) {
       setMsgs((m) => [
         ...m,
         { who: "me", text },
-        {
-          who: "byeol",
-          text: "I compared the internship requirements with your current profile and evidence.",
-          comparison: true,
-        },
+        { who: "byeol", text: "ai_compared", comparison: true },
       ]);
       return;
     }
@@ -53,12 +49,9 @@ export function ByeolAIScreen({ go }: { go: (s: string) => void }) {
     setMsgs((m) => [
       ...m,
       { who: "me", text },
-      {
-        who: "byeol",
-        text: gap
-          ? `Based on your profile, ${gap.name} is your strongest next priority: your target career requires it and your evidence does not yet cover it.`
-          : "Every priority capability now has evidence — the next useful step is deepening your portfolio.",
-      },
+      gap
+        ? { who: "byeol" as const, text: "ai_answer_gap", params: { x: gap.name } }
+        : { who: "byeol" as const, text: "ai_answer_none" },
     ]);
   };
 
@@ -67,21 +60,20 @@ export function ByeolAIScreen({ go }: { go: (s: string) => void }) {
       <h1 className="screen-title">{t("ai_title")}</h1>
       <div className="banner">
         <div className="dot" />
-        <p>
-          Byeol answers using your persistent profile — courses, skills, projects, evidence and
-          career goal — not just this message.
-        </p>
+        <p>{t("ai_banner")}</p>
       </div>
 
       {msgs.map((m, i) => (
         <div key={i}>
           <div className={`bubble-row ${m.who === "me" ? "me" : "bot"}`}>
             {m.who === "byeol" && <Mascot size={26} />}
-            <div className="bubble">{m.text}</div>
+            <div className="bubble">
+              {m.who === "me" ? m.text : t(m.text, m.params ? { x: tx(m.params.x!) } : undefined)}
+            </div>
           </div>
           {m.comparison && (
             <div className="card compare-card">
-              <p className="compare-title">Requirement-by-requirement comparison</p>
+              <p className="compare-title">{t("ai_compare_title")}</p>
               {[
                 { id: "python", label: "Python" },
                 { id: "ml", label: "Machine Learning" },
@@ -91,21 +83,18 @@ export function ByeolAIScreen({ go }: { go: (s: string) => void }) {
               ].map((r) => {
                 const st = statusOf(r.id);
                 const verdict =
-                  st === "DEMONSTRATED" ? "MATCH" : st === "PRIORITY GAP" ? "GAP" : "DEVELOPING";
+                  st === "DEMONSTRATED" ? "match" : st === "PRIORITY GAP" ? "gap" : "developing";
                 return (
                   <div className="compare-row" key={r.id}>
-                    <span>{r.label}</span>
-                    <span className={`verdict ${verdict.toLowerCase()}`}>{verdict}</span>
+                    <span>{tx(r.label)}</span>
+                    <span className={`verdict ${verdict}`}>{t(`verdict_${verdict}`)}</span>
                   </div>
                 );
               })}
-              <p className="evidence-note">
-                ROS is currently one of your strongest next priorities because the internship
-                requires it and your profile does not yet contain demonstrated ROS evidence.
-              </p>
+              <p className="evidence-note">{t("ai_compare_note")}</p>
               <div className="rec-actions">
                 <button className="rec-btn primary" onClick={() => go("path")}>
-                  View My Path
+                  {t("ai_view_path")}
                 </button>
                 <button
                   className="rec-btn"
@@ -117,7 +106,7 @@ export function ByeolAIScreen({ go }: { go: (s: string) => void }) {
                   Add to My Path
                 </button>
                 <button className="rec-btn" onClick={() => go("explore")}>
-                  Find learning resource
+                  {t("ai_find_resource")}
                 </button>
               </div>
             </div>
@@ -127,15 +116,15 @@ export function ByeolAIScreen({ go }: { go: (s: string) => void }) {
 
       <div className="quick-row">
         <button className="quick-chip" onClick={runInternshipCheck}>
-          Am I ready for this Robotics AI internship?
+          {t("ai_chip_ready")}
         </button>
         <button
           className="quick-chip"
           onClick={() => {
-            setInput("What should I learn next?");
+            setInput(t("ai_chip_next"));
           }}
         >
-          What should I learn next?
+          {t("ai_chip_next")}
         </button>
       </div>
 

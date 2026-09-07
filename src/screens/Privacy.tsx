@@ -11,113 +11,85 @@ export function PrivacyScreen() {
       <h1 className="screen-title">{t("privacy_title")}</h1>
       <div className="banner">
         <div className="dot" />
-        <p>
-          Byeol provides aggregated student-development insights without exposing private student
-          conversations.
-        </p>
+        <p>{t("pv_banner")}</p>
       </div>
 
       <div className="privacy-flow">
         <div className="privacy-tile private">
           <span className="privacy-icon">🔒</span>
-          <p className="privacy-kicker">STUDENT PERSONALISATION DATA</p>
-          <p className="privacy-verdict">PRIVATE</p>
-          <p className="privacy-note">Conversations, notes and personal questions stay with you.</p>
+          <p className="privacy-kicker">{t("pv_k1")}</p>
+          <p className="privacy-verdict">{t("pv_v1")}</p>
+          <p className="privacy-note">{t("pv_n1")}</p>
         </div>
         <div className="privacy-tile aggregate">
           <span className="privacy-icon">📊</span>
-          <p className="privacy-kicker">AGGREGATED / DE-IDENTIFIED INSIGHTS</p>
-          <p className="privacy-verdict">SHARED WITH UNIVERSITY</p>
-          <p className="privacy-note">Program- and department-level patterns only.</p>
+          <p className="privacy-kicker">{t("pv_k2")}</p>
+          <p className="privacy-verdict">{t("pv_v2")}</p>
+          <p className="privacy-note">{t("pv_n2")}</p>
         </div>
         <div className="privacy-tile consent">
           <span className="privacy-icon">✋</span>
-          <p className="privacy-kicker">IDENTIFIABLE STUDENT INFORMATION</p>
-          <p className="privacy-verdict">NOT SHARED WITH EMPLOYERS</p>
-          <p className="privacy-note">Unless you give explicit consent, case by case.</p>
+          <p className="privacy-kicker">{t("pv_k3")}</p>
+          <p className="privacy-verdict">{t("pv_v3")}</p>
+          <p className="privacy-note">{t("pv_n3")}</p>
         </div>
       </div>
 
-      <p className="section-title">What Byeol uses</p>
+      <p className="section-title">{t("pv_uses")}</p>
       <div className="card">
-        {[
-          "Student-provided profile",
-          "Courses",
-          "Skills",
-          "Projects",
-          "Career goal",
-          "Optional CV / portfolio",
-          "Personalisation history",
-        ].map((x) => (
+        {["pv_u1", "pv_u2", "pv_u3", "pv_u4", "pv_u5", "pv_u6", "pv_u7"].map((x) => (
           <div className="profile-field" key={x}>
-            <span>{x}</span>
-            <b>Used for your path</b>
+            <span>{t(x)}</span>
+            <b>{t("pv_used_for")}</b>
           </div>
         ))}
       </div>
 
-      <p className="section-title">What the university can see</p>
+      <p className="section-title">{t("pv_univ_title")}</p>
       <div className="card">
-        <p className="feed-sub">
-          Aggregated, de-identified, program- and department-level insights only. Universities do
-          not automatically see private conversations, personal career questions, private notes,
-          individual transcripts or personal student records.
-        </p>
+        <p className="feed-sub">{t("pv_univ_body")}</p>
       </div>
 
-      <p className="section-title">What employers can see</p>
+      <p className="section-title">{t("pv_emp_title")}</p>
       <div className="card">
-        <p className="feed-sub">
-          No personally identifiable student information by default. Candidate introductions are
-          student-controlled — identifiable information is shared only after explicit student
-          consent.
-        </p>
+        <p className="feed-sub">{t("pv_emp_body")}</p>
         <div className="profile-field">
-          <span>Allow Byeol to suggest me for relevant opportunities</span>
+          <span>{t("pv_emp_toggle")}</span>
           <Toggle
             on={employerMatching}
             onChange={(v) => {
               setEmployerMatching(v);
               pushToast({
-                title: v ? "Employer matching enabled" : "Employer matching turned off",
-                body: v
-                  ? "You will still be asked to approve each introduction before anything identifiable is shared."
-                  : "Default state — nothing identifiable is shared.",
+                title: v ? "toast_emp_on" : "toast_emp_off",
+                body: v ? "toast_emp_on_body" : "toast_emp_off_body",
               });
             }}
           />
         </div>
-        <p className="evidence-note">Default: OFF.</p>
+        <p className="evidence-note">{t("pv_default_off")}</p>
       </div>
 
-      <p className="section-title">Controls</p>
+      <p className="section-title">{t("pv_controls")}</p>
       <div className="card">
-        {[
-          "Manage personalisation",
-          "Download my data",
-          "Delete profile data",
-          "Manage employer matching",
-        ].map((c) => (
+        {["pv_c1", "pv_c2", "pv_c3", "pv_c4"].map((c) => (
           <button
             key={c}
             className="settings-row control-row"
-            onClick={() => pushToast({ title: `${c} (prototype control)` })}
+            onClick={() => pushToast({ title: "pv_prototype_control", params: { x: t(c) } })}
           >
-            {c}
+            {t(c)}
             <span className="chevron">›</span>
           </button>
         ))}
       </div>
 
-      <p className="section-title">Data sources &amp; integrations</p>
+      <p className="section-title">{t("pv_sources")}</p>
       <div className="card">
         <p className="feed-sub">
-          <b>Works today:</b> official/public university information, student-provided information,
-          open educational resources, institution-approved uploaded content.
+          <b>{t("pv_today_label")}</b> {t("pv_today_body")}
         </p>
         <p className="feed-sub" style={{ marginTop: 8 }}>
-          <b>Optional future integrations:</b> SSO, LMS, SIS, APIs. Unrestricted university database
-          access is not required.
+          <b>{t("pv_future_label")}</b> {t("pv_future_body")}
         </p>
       </div>
     </div>

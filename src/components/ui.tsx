@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from "react";
-import byeolAsset from "@/assets/byeol-mascot.jpg.asset.json";
-import gilAsset from "@/assets/gil-mascot.jpg.asset.json";
+import byeolMascot from "@/assets/byeol-mascot.jpg";
+import gilMascot from "@/assets/gil-mascot.jpg";
 import { LANGS, useLang } from "@/lib/i18n";
 import { useByeol, type Feedback } from "@/lib/store";
 import type { SkillStatus } from "@/data/demo";

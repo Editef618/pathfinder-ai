@@ -27,9 +27,11 @@ export function ExploreScreen() {
         (i) =>
           (cat === "For you" || i.category === cat) &&
           (q.trim() === "" ||
-            (i.title + i.addresses + i.category).toLowerCase().includes(q.toLowerCase())),
+            (i.title + i.addresses + i.category + tx(i.title) + tx(i.addresses) + tx(i.category))
+              .toLowerCase()
+              .includes(q.toLowerCase())),
       ),
-    [cat, q],
+    [cat, q, tx],
   );
 
   return (

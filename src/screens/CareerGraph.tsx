@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { careerGraph, gapActions, student } from "@/data/demo";
 import { useByeol } from "@/lib/store";
+import { useLang } from "@/lib/i18n";
 import { DemoBadge } from "@/components/ui";
 
 const STATUS_CLASS: Record<string, string> = {
@@ -12,6 +13,7 @@ const STATUS_CLASS: Record<string, string> = {
 
 export function CareerGraphScreen() {
   const { skills, goal } = useByeol();
+  const { t, tx, ts } = useLang();
   const [selected, setSelected] = useState<string | null>(null);
 
   const gaps = skills.filter((s) => s.status === "PRIORITY GAP");
@@ -25,12 +27,9 @@ export function CareerGraphScreen() {
     <div className="stack graph-screen">
       <div className="graph-hero">
         <h1 className="screen-title" style={{ margin: 0 }}>
-          Career graph
+          {t("graph_title")}
         </h1>
-        <p className="graph-statement">
-          Byeol connects what you're learning, what you've demonstrated, what your career requires,
-          and what you should do next.
-        </p>
+        <p className="graph-statement">{t("graph_statement")}</p>
         <DemoBadge />
       </div>
 
@@ -39,11 +38,11 @@ export function CareerGraphScreen() {
           const layer = layerById(id);
           return (
             <div className="graph-layer" key={layer.id} style={{ animationDelay: `${i * 70}ms` }}>
-              <p className="graph-label">{layer.label}</p>
+              <p className="graph-label">{tx(layer.label)}</p>
               <div className="graph-nodes">
                 {layer.nodes.map((n) => (
                   <span key={n} className="graph-node">
-                    {n}
+                    {tx(n)}
                   </span>
                 ))}
               </div>
@@ -53,7 +52,7 @@ export function CareerGraphScreen() {
         })}
 
         <div className="graph-layer" style={{ animationDelay: "210ms" }}>
-          <p className="graph-label">Skills (live status)</p>
+          <p className="graph-label">{t("graph_skills_live")}</p>
           <div className="graph-nodes">
             {skills
               .filter((s) => s.status !== "PRIORITY GAP")
@@ -65,7 +64,7 @@ export function CareerGraphScreen() {
                   }`}
                   onClick={() => setSelected(selected === s.name ? null : s.name)}
                 >
-                  {s.name} <em>{s.status}</em>
+                  {tx(s.name)} <em>{ts(s.status)}</em>
                 </button>
               ))}
           </div>
@@ -73,11 +72,11 @@ export function CareerGraphScreen() {
         </div>
 
         <div className="graph-layer" style={{ animationDelay: "280ms" }}>
-          <p className="graph-label">Projects / evidence</p>
+          <p className="graph-label">{tx("Projects / evidence")}</p>
           <div className="graph-nodes">
             {student.projects.map((p) => (
               <span key={p.name} className="graph-node evidence">
-                {p.name}
+                {tx(p.name)}
               </span>
             ))}
           </div>
@@ -85,7 +84,7 @@ export function CareerGraphScreen() {
         </div>
 
         <div className="graph-layer" style={{ animationDelay: "350ms" }}>
-          <p className="graph-label">{goal} requirements</p>
+          <p className="graph-label">{t("graph_requirements", { x: tx(goal) })}</p>
           <div className="graph-nodes">
             {layerById("requirements").nodes.map((n) => (
               <span
@@ -94,7 +93,7 @@ export function CareerGraphScreen() {
                   statusOf(n) ? STATUS_CLASS[statusOf(n)!] : ""
                 }`}
               >
-                {n}
+                {tx(n)}
               </span>
             ))}
           </div>
@@ -102,8 +101,8 @@ export function CareerGraphScreen() {
         </div>
 
         <div className="graph-layer" style={{ animationDelay: "420ms" }}>
-          <p className="graph-label">Skill gaps → recommended actions</p>
-          {gaps.length === 0 && <span className="graph-node">No priority gaps left</span>}
+          <p className="graph-label">{t("graph_gaps_actions")}</p>
+          {gaps.length === 0 && <span className="graph-node">{t("graph_no_gaps")}</span>}
           <div className="gap-flow">
             {gaps.map((g) => (
               <div className="gap-link" key={g.id}>
@@ -111,11 +110,11 @@ export function CareerGraphScreen() {
                   className={`graph-node interactive gap ${selected === g.name ? "selected" : ""}`}
                   onClick={() => setSelected(selected === g.name ? null : g.name)}
                 >
-                  {g.name} <em>PRIORITY GAP</em>
+                  {tx(g.name)} <em>{ts("PRIORITY GAP")}</em>
                 </button>
                 <span className="gap-connector">→</span>
                 <span className="graph-node action">
-                  {gapActions[g.name]?.action ?? "Recommended learning"}
+                  {tx(gapActions[g.name]?.action ?? t("graph_default_action"))}
                 </span>
               </div>
             ))}
@@ -124,11 +123,11 @@ export function CareerGraphScreen() {
         </div>
 
         <div className="graph-layer" style={{ animationDelay: "490ms" }}>
-          <p className="graph-label">Opportunities</p>
+          <p className="graph-label">{tx("Opportunities")}</p>
           <div className="graph-nodes">
             {layerById("opportunities").nodes.map((n) => (
               <span key={n} className="graph-node opportunity">
-                {n}
+                {tx(n)}
               </span>
             ))}
           </div>
@@ -136,9 +135,9 @@ export function CareerGraphScreen() {
         </div>
 
         <div className="graph-layer" style={{ animationDelay: "560ms" }}>
-          <p className="graph-label">Career direction</p>
+          <p className="graph-label">{t("path_direction")}</p>
           <div className="graph-nodes">
-            <span className="graph-node goal">{goal}</span>
+            <span className="graph-node goal">{tx(goal)}</span>
           </div>
         </div>
       </div>
@@ -146,17 +145,17 @@ export function CareerGraphScreen() {
       {selectedSkill && (
         <div className="card graph-detail">
           <p className="action-title">
-            {selectedSkill.name} · {selectedSkill.status}
+            {tx(selectedSkill.name)} · {ts(selectedSkill.status)}
           </p>
-          <p className="feed-sub">{selectedSkill.why}</p>
+          <p className="feed-sub">{tx(selectedSkill.why)}</p>
           {gapActions[selectedSkill.name] && (
             <p className="feed-sub">
-              <b>Recommended action:</b> {gapActions[selectedSkill.name]!.action} ·{" "}
-              <b>Leads to:</b> {gapActions[selectedSkill.name]!.opportunity}
+              <b>{t("graph_rec_action")}</b> {tx(gapActions[selectedSkill.name]!.action)} ·{" "}
+              <b>{t("graph_leads_to")}</b> {tx(gapActions[selectedSkill.name]!.opportunity)}
             </p>
           )}
           <button className="link-btn" onClick={() => setSelected(null)}>
-            Close
+            {t("close")}
           </button>
         </div>
       )}

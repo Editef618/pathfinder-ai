@@ -3,7 +3,7 @@ import { calendarEvents } from "@/data/demo";
 import { useByeol } from "@/lib/store";
 
 export function CalendarScreen() {
-  const { t } = useLang();
+  const { t, tx } = useLang();
   const { nextStep } = useByeol();
   const marks = new Set(calendarEvents.map((e) => e.day));
 
@@ -12,13 +12,13 @@ export function CalendarScreen() {
   return (
     <div className="stack">
       <h1 className="screen-title">{t("calendar_title")}</h1>
-      <p className="feed-sub">Connected to your pathway — milestones come from My Path.</p>
+      <p className="feed-sub">{t("cal_connected")}</p>
       <div className="cal-card">
         <div className="cal-head">
-          <span>September 2026</span>
+          <span>{tx("September 2026")}</span>
         </div>
         <div className="cal-grid">
-          {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
+          {t("cal_dows").split(",").map((d, i) => (
             <div className="dow" key={i}>
               {d}
             </div>
@@ -38,8 +38,8 @@ export function CalendarScreen() {
         <div className="agenda-item">
           <div className="agenda-dot" />
           <div>
-            <p className="agenda-title">{nextStep.action} — milestone</p>
-            <p className="agenda-sub">From My Path · this week</p>
+            <p className="agenda-title">{t("cal_milestone", { x: tx(nextStep.action) })}</p>
+            <p className="agenda-sub">{t("cal_from_path")}</p>
           </div>
         </div>
       )}
@@ -47,8 +47,8 @@ export function CalendarScreen() {
         <div className="agenda-item" key={e.title}>
           <div className={`agenda-dot ${e.kind === "review" ? "blue" : ""}`} />
           <div>
-            <p className="agenda-title">{e.title}</p>
-            <p className="agenda-sub">{e.sub}</p>
+            <p className="agenda-title">{tx(e.title)}</p>
+            <p className="agenda-sub">{tx(e.sub)}</p>
           </div>
         </div>
       ))}

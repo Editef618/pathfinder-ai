@@ -56,7 +56,6 @@ function ByeolApp() {
             </div>
             <span className="demo-mode">DEMO MODE</span>
           </div>
-          </div>
           <p className="root-tagline">Byeol connects what students learn with where they want to go.</p>
           <div className="stage">
             {view === "mobile" && <MobileView />}

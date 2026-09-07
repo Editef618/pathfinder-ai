@@ -9,7 +9,7 @@ function SkillRow({ skill }: { skill: Skill }) {
   const { t } = useLang();
   const { completeLearning } = useByeol();
   return (
-    <div className={`skill-card ${open ? "open" : ""}`}>
+    <div className={`skill-card ${open ? "open" : ""} status-${skill.status.toLowerCase().replace(" ", "-")}`} key={skill.status}>
       <button className="skill-head" onClick={() => setOpen((o) => !o)}>
         <span className="skill-name">{skill.name}</span>
         <StatusPill status={skill.status} />
@@ -29,7 +29,7 @@ function SkillRow({ skill }: { skill: Skill }) {
             Taking a course does not automatically equal mastery — Byeol looks for project or
             applied evidence too.
           </p>
-          <WhyThis text={skill.why} />
+          <WhyThis text={skill.why} defaultOpen={skill.status === "PRIORITY GAP"} />
           {skill.status !== "DEMONSTRATED" && (
             <button className="btn-primary small" onClick={() => completeLearning(skill.id)}>
               {t("act_complete_learning")}
@@ -90,6 +90,17 @@ export function MyPathScreen() {
               </button>
             ))}
           </div>
+        )}
+      </div>
+
+      <div className="path-rail">
+        {["Where I am", "What I'm missing", "What I'm doing next", "Evidence I'm building", "Where I'm going"].map(
+          (s, i) => (
+            <div className="rail-step" key={s} style={{ animationDelay: `${i * 60}ms` }}>
+              <span className="rail-dot" />
+              <span>{s}</span>
+            </div>
+          ),
         )}
       </div>
 

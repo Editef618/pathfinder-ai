@@ -46,11 +46,19 @@ export function Toggle({ on, onChange }: { on: boolean; onChange: (v: boolean) =
   );
 }
 
-export function WhyThis({ text, basedOn }: { text: string; basedOn?: string[] }) {
-  const [open, setOpen] = useState(false);
+export function WhyThis({
+  text,
+  basedOn,
+  defaultOpen = false,
+}: {
+  text: string;
+  basedOn?: string[];
+  defaultOpen?: boolean;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
   const { t } = useLang();
   return (
-    <div className="why-box">
+    <div className={`why-box ${open ? "open" : ""}`}>
       <button className="why-toggle" onClick={() => setOpen((o) => !o)}>
         {t("why_this")} <span>{open ? "−" : "+"}</span>
       </button>

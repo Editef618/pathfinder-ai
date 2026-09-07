@@ -17,6 +17,27 @@ export function PrivacyScreen() {
         </p>
       </div>
 
+      <div className="privacy-flow">
+        <div className="privacy-tile private">
+          <span className="privacy-icon">🔒</span>
+          <p className="privacy-kicker">STUDENT PERSONALISATION DATA</p>
+          <p className="privacy-verdict">PRIVATE</p>
+          <p className="privacy-note">Conversations, notes and personal questions stay with you.</p>
+        </div>
+        <div className="privacy-tile aggregate">
+          <span className="privacy-icon">📊</span>
+          <p className="privacy-kicker">AGGREGATED / DE-IDENTIFIED INSIGHTS</p>
+          <p className="privacy-verdict">SHARED WITH UNIVERSITY</p>
+          <p className="privacy-note">Program- and department-level patterns only.</p>
+        </div>
+        <div className="privacy-tile consent">
+          <span className="privacy-icon">✋</span>
+          <p className="privacy-kicker">IDENTIFIABLE STUDENT INFORMATION</p>
+          <p className="privacy-verdict">NOT SHARED WITH EMPLOYERS</p>
+          <p className="privacy-note">Unless you give explicit consent, case by case.</p>
+        </div>
+      </div>
+
       <p className="section-title">What Byeol uses</p>
       <div className="card">
         {[

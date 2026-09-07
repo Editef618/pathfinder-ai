@@ -10,7 +10,7 @@ import { initialSkills, roadmap, type Skill, type SkillStatus } from "@/data/dem
 
 export type Feedback = "added" | "interested" | "completed" | "not_relevant" | "later";
 
-export type Toast = { id: number; title: string; body?: string };
+export type Toast = { id: number; title: string; body?: string; params?: Record<string, string> };
 
 type Ctx = {
   skills: Skill[];
@@ -96,10 +96,9 @@ export function ByeolProvider({ children }: { children: ReactNode }) {
         return next;
       });
       pushToast({
-        title: "Your profile changed, so Byeol updated your path.",
-        body: nextName
-          ? `${promotedName} is now Developing. New priority: ${nextName}.`
-          : `${promotedName} is now Developing.`,
+        title: "toast_path_updated",
+        body: nextName ? "toast_path_body" : "toast_path_body_one",
+        params: { a: promotedName, b: nextName },
       });
     },
     [pushToast],

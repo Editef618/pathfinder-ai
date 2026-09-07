@@ -5,8 +5,8 @@ import { LANGS, useLang } from "@/lib/i18n";
 import { useByeol, type Feedback } from "@/lib/store";
 import type { SkillStatus } from "@/data/demo";
 
-export const BYEOL_SRC = byeolAsset.url;
-export const GIL_SRC = gilAsset.url;
+export const BYEOL_SRC = byeolMascot;
+export const GIL_SRC = gilMascot;
 
 export function Mascot({ size = 34, gil = false }: { size?: number; gil?: boolean }) {
   return (

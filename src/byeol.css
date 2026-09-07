@@ -522,6 +522,7 @@
   .admin{ width:100%; }
 }
 @media (max-width: 520px){
+  .phone-wrap{ width:100%; max-width:390px; }
   .phone{ width:100%; max-width:390px; height:min(824px, 88vh); border-radius:40px; }
   .stage{ padding:16px 12px 60px; }
   .topbar{ padding:18px 12px 4px; }

@@ -175,8 +175,6 @@
   .bubble-row.bot .bubble, .bubble-row.byeol .bubble{ background:var(--white); border-bottom-left-radius:4px; box-shadow:var(--shadow); }
   .bubble-row.me .bubble{ background:var(--byeol); color:#fff; border-bottom-right-radius:4px; }
   .bubble-row.gil .bubble{ background:var(--gil-wash); border:1px solid #DCEFF7; border-bottom-left-radius:4px; }
-  .bubble-row.nova .bubble{ background:#EAF7F2; border:1px solid #D3EEE3; border-bottom-left-radius:4px; }
-  .bubble-row.aria .bubble{ background:#F3EEFB; border:1px solid #E4D8F7; border-bottom-left-radius:4px; }
   .chat-input{ display:flex; align-items:center; gap:8px; background:var(--white); border-radius:999px; padding:10px 8px 10px 16px; box-shadow:var(--shadow); position:sticky; bottom:0; }
   .chat-input input{ border:none; outline:none; flex:1; font-family:inherit; font-size:13px; background:none; }
   .send-btn{ width:32px; height:32px; border-radius:50%; background:var(--byeol); border:none; display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; }

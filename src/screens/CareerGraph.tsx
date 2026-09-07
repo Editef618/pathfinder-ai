@@ -17,9 +17,6 @@ export function CareerGraphScreen() {
   const gaps = skills.filter((s) => s.status === "PRIORITY GAP");
   const statusOf = (name: string) => skills.find((s) => s.name === name)?.status;
 
-  const layers = careerGraph.layers.filter(
-    (l) => !["skills", "gaps", "actions"].includes(l.id),
-  );
   const layerById = (id: string) => careerGraph.layers.find((l) => l.id === id)!;
 
   const selectedSkill = skills.find((s) => s.name === selected);
